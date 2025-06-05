@@ -9,10 +9,8 @@ hand_detector = HandDetector()
 hand_detector.initHandsModule()
 camera.openStream(url) 
 
-while True:                 
+while not camera.checkExit():                 
     camera.readFrame()
     bounding_box = hand_detector.generateBoundingBox(camera.getFrame()) 
     camera.drawBoundingBox(bounding_box)
     camera.showFrame()
-    if camera.checkExit():
-        break
