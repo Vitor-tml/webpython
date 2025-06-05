@@ -4,7 +4,7 @@ class HandDetector:
     def __init__(self):
         self.hands = None
         self.results = None
-
+        self.mp_drawing = None
     def initHandsModule(self):
         # Inicializa o detector de mãos do MediaPipe
         self.hands = mp.solutions.hands.Hands(
@@ -12,6 +12,8 @@ class HandDetector:
             max_num_hands=2,             # Detecta até 2 mãos    
             min_detection_confidence=0.7 # Confiança mínima para detectar
         )
+        # Inicializa o módulo de desenho do MediaPipe
+        self.mp_drawing = mp.solutions.drawing_utils
     
     def processFrame(self, image):
         self.results =  self.hands.process(image)
@@ -33,3 +35,15 @@ class HandDetector:
             }
         else:
             return None
+    
+    def drawLandmarks(self, image):
+        results = self.processFrame(image)
+        if results:
+            for hand_landmarks in results:
+                # Desenha os pontos e conexões no frame original (BGR)
+                self.mp_drawing.draw_landmarks(
+                    image,  # frame BGR
+                    hand_landmarks,
+                    mp.solutions.hands.HAND_CONNECTIONS
+                )
+        return image
