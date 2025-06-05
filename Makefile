@@ -1,4 +1,4 @@
-all:
+all: 
 	python3 src/main.py
 
 initvenv:
