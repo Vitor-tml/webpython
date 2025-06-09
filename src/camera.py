@@ -18,7 +18,7 @@ class Camera:
             print("Não foi possível abrir o stream")
             exit()
     
-    def readFrame(self):
+    def  readFrame(self):
         # Lê um frame do vídeo
         ret, self.frame = self.video.read()
         if not ret:
@@ -44,8 +44,11 @@ class Camera:
         return cv2.cvtColor(self.frame, cv2.COLOR_BGR2RGB)
     
     def showFrame(self, title='Capicamera'):
-        # Verifica se o frame existe e mostra informações básicas
-        cv2.imshow(title, self.frame)
+    # Verifica se o frame existe e mostra informações básicas
+        if self.frame is not None:
+            resized_frame = cv2.resize(self.frame, (1280, 720))
+            mirrored_frame = cv2.flip(resized_frame, 1)  # 1 = flip horizontal
+            cv2.imshow(title, mirrored_frame)
 
     def checkExit(self):
         return cv2.waitKey(1) & 0xFF == ord('q')

@@ -1,5 +1,5 @@
 all: 
-	python3 src/main.py
+	python src/main.py
 
 initvenv:
 	@echo "Creating virtual environment..."
